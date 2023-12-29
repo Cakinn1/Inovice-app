@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Main from "./pages/Main";
+import Nav from "./pages/Nav";
+import data from "./constants/data.json";
+import { useEffect, useState } from "react";
 
-function App() {
+export interface InvoiceDataProps {
+  clientAddress: ClientAddressProps;
+  clientEmail: string;
+  clientName: string;
+  createdAt: string;
+  description: string;
+  id: string;
+  items: InvoiceItem[];
+  paymentDue: string;
+  paymentTerms: number;
+  senderAddress: SenderAddressProps;
+  // status: "paid" | "pending" | "draft"
+  status: string;
+  total: number;
+}
+
+interface SenderAddressProps {
+  street: string;
+  city: string;
+  postCode: string;
+  country: string;
+}
+
+interface ClientAddressProps {
+  street: string;
+  city: string;
+  postCode: string;
+  country: string;
+}
+interface InvoiceItem {
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+}
+
+export default function App() {
+  const [invoiceData, setInvoiceData] = useState<InvoiceDataProps[]>(data);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Nav />
+      <Main invoiceData={invoiceData} setInvoiceData={setInvoiceData} />
     </div>
   );
 }
-
-export default App;

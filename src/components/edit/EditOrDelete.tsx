@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InvoiceDataProps } from "../../App";
 import StatusVersion from "../StatusVersion";
 import { stat } from "fs/promises";
@@ -50,19 +50,53 @@ export default function EditOrDelete(props: EditOrDelete) {
       ? "bg-white"
       : "";
 
-  const [inputStreetAddress, setInputStreetAddress] = useState<string>(objectData.senderAddress.street);
+  const [inputStreetAddress, setInputStreetAddress] = useState<string>(
+    objectData.senderAddress.street
+  );
+  const [inputCity, setInputCity] = useState<string>(
+    objectData.senderAddress.city
+  );
+  const [inputPostcode, setInputPostcode] = useState<string>(
+    objectData.senderAddress.postCode
+  );
+  const [inputCountry, setInputCountry] = useState<string>(
+    objectData.senderAddress.country
+  );
 
-  console.log(id, objectData);
-
-  function updateInvoiceField(id: string, field: string, value: string, inputValue: string) {
+  function updateInvoiceField(
+    field: string,
+    value: string,
+    inputValue: string
+  ) {
     const updateInvoice = invoiceData.map((item) => {
       if (item.id === id) {
         return {
           ...item,
           [field]: {
             ...item[field],
-            [value]: inputValue 
-          }
+            [value]: inputValue,
+          },
+        };
+      } else {
+        return item;
+      }
+    });
+    setInvoiceData(updateInvoice);
+  }
+  const [clientName, setClientName] = useState<string>(objectData.clientName);
+  const [clientEmail, setClientEmail] = useState<string>(
+    objectData.clientEmail
+  );
+  const [clientCity, setClientCity] = useState<string>(
+    objectData.clientAddress.city
+  );
+
+  function updateInvoiceSingleVoice(field: string, inputValue: string) {
+    const updateInvoice = invoiceData.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          [field]: inputValue,
         };
       } else {
         return item;
@@ -71,23 +105,63 @@ export default function EditOrDelete(props: EditOrDelete) {
     setInvoiceData(updateInvoice);
   }
 
+  // bill from
+  console.log(objectData);
+
   function handleChangeStreetAddress() {
-    const updateData = invoiceData.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          senderAddress: {
-            ...item.senderAddress,
-            street: inputStreetAddress,
-          },
-        };
-      } else {
-        return item;
-      }
-    });
-    setInvoiceData(updateData);
+    updateInvoiceField("senderAddress", "street", inputStreetAddress);
   }
-  console.log(inputStreetAddress);
+  function handleChangeCity() {
+    updateInvoiceField("senderAddress", "city", inputCity);
+  }
+  function handleChangePostcode() {
+    updateInvoiceField("senderAddress", "postCode", inputPostcode);
+  }
+  function handleChangeCityCountry() {
+    updateInvoiceField("senderAddress", "country", inputCountry);
+  }
+
+  useEffect(() => {
+    handleChangeStreetAddress();
+  }, [inputStreetAddress, id]);
+
+  useEffect(() => {
+    handleChangeCity();
+  }, [inputCity, id]);
+
+  useEffect(() => {
+    handleChangePostcode();
+  }, [inputPostcode, id]);
+
+  useEffect(() => {
+    handleChangeCityCountry();
+  }, [inputCountry, id]);
+
+  // Bill Form
+
+  function handleChangeName() {
+    updateInvoiceSingleVoice("clientName", clientName);
+  }
+  function handleChangeEmail() {
+    updateInvoiceSingleVoice("clientEmail", clientEmail);
+  }
+
+  function handleChangeStreet() {
+    updateInvoiceField("clientAddress", "street", clientCity);
+  }
+
+  useEffect(() => {
+    handleChangeName();
+  }, [clientName, id]);
+
+  useEffect(() => {
+    handleChangeEmail();
+  }, [clientEmail, id]);
+
+  useEffect(() => {
+    handleChangeStreet();
+  }, [inputCity, id]);
+
   return (
     <>
       <div className="bg-[#1e2139] px-8 text-white rounded-lg h-[110px] flex justify-between items-center">
@@ -129,9 +203,20 @@ export default function EditOrDelete(props: EditOrDelete) {
       )}
       {editModal && (
         <EditModal
+          clientCity={clientCity}
+          clientName={clientName}
+          clientEmail={clientEmail}
+          setClientName={setClientName}
+          setClientEmail={setClientEmail}
+          setClientCity={setClientCity}
+          inputCity={inputCity}
+          setInputCity={setInputCity}
+          setInputCountry={setInputCountry}
+          setInputPostcode={setInputPostcode}
+          inputPostcode={inputPostcode}
+          inputCountry={inputCountry}
           inputStreetAddress={inputStreetAddress}
           setInputStreetAddress={setInputStreetAddress}
-          handleChangeStreetAddress={handleChangeStreetAddress}
           setEditModal={setEditModal}
           objectData={objectData}
         />

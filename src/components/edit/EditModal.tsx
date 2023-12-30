@@ -2,21 +2,43 @@ import React from "react";
 import { InvoiceDataProps } from "../../App";
 import InputField from "./InputField";
 import { FaRegTrashAlt } from "react-icons/fa";
-interface EditModalProps {
-  objectData: InvoiceDataProps;
-  setEditModal: (value: boolean) => void;
-  handleChangeStreetAddress: () => void;
-  setInputStreetAddress: (value: string) => void;
-  inputStreetAddress: string;
-}
 
+interface EditModalProps {
+  setEditModal: (value: boolean) => void;
+  objectData: InvoiceDataProps;
+  inputStreetAddress: string;
+  inputCity: string;
+  inputCountry: string;
+  inputPostcode: string;
+  clientName: string;
+  clientEmail: string;
+  clientCity: string;
+  setInputStreetAddress: (value: string) => void;
+  setInputCity: (value: string) => void;
+  setInputCountry: (value: string) => void;
+  setInputPostcode: (value: string) => void;
+  setClientName: (value: string) => void;
+  setClientEmail: (value: string) => void;
+  setClientCity: (value: string) => void;
+}
 export default function EditModal(props: EditModalProps) {
   const {
     objectData,
     setEditModal,
-    handleChangeStreetAddress,
     setInputStreetAddress,
     inputStreetAddress,
+    inputCity,
+    inputCountry,
+    inputPostcode,
+    setInputCity,
+    setInputCountry,
+    setInputPostcode,
+    clientCity,
+    clientEmail,
+    clientName,
+    setClientCity,
+    setClientEmail,
+    setClientName,
   } = props;
 
   const headerTitle = "text-[#7c5dfa] text-[14px] font-semibold";
@@ -31,7 +53,7 @@ export default function EditModal(props: EditModalProps) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleChangeStreetAddress();
+          // SubmitInfo();
         }}
         onClick={(e) => e.stopPropagation()}
         className="w-[620px] h-full space-y-4 p-6 overflow-y-scroll rounded-r-3xl text-white  bg-[#141625]"
@@ -41,7 +63,7 @@ export default function EditModal(props: EditModalProps) {
           {objectData.id}
         </h1>
         <div className="space-y-4">
-          <h1 className={headerTitle}>Bill Form</h1>
+          <h1 className={headerTitle}>Bill From</h1>
 
           <div className="space-y-4">
             <h1 className={smallTitle}>Street Address</h1>
@@ -56,46 +78,52 @@ export default function EditModal(props: EditModalProps) {
           <div className="space-y-4 w-full ">
             <h1 className={smallTitle}>City</h1>
             <input
+              onChange={(e) => setInputCity(e.target.value)}
               className={`${inputStyle} flex-1 max-w-[31%]`}
-              value={objectData.senderAddress.city}
+              value={inputCity}
               type="text"
             />
             <input
+              onChange={(e) => setInputPostcode(e.target.value)}
               className={`${inputStyle}  flex-1 max-w-[31%] mx-3`}
-              value={objectData.senderAddress.postCode}
+              value={inputPostcode}
               type="text"
             />
             <input
+              onChange={(e) => setInputCountry(e.target.value)}
               className={`${inputStyle} flex-1 max-w-[33%]`}
-              value={objectData.senderAddress.country}
+              value={inputCountry}
               type="text"
             />
           </div>
         </div>
         <div className="space-y-4">
-          <h1 className={headerTitle}>Bill Form</h1>
+          <h1 className={headerTitle}>Bill To</h1>
 
           <div className="space-y-4">
             <h1 className={smallTitle}>Client's Name</h1>
             <input
+              onChange={(e) => setClientName(e.target.value)}
               className={inputStyle}
-              value={objectData.clientName}
+              value={clientName}
               type="text"
             />
           </div>
           <div className="space-y-4">
             <h1 className={smallTitle}>Client's Email</h1>
             <input
+              onChange={(e) => setClientEmail(e.target.value)}
               className={inputStyle}
-              value={objectData.clientEmail}
+              value={clientEmail}
               type="text"
             />
           </div>
           <div className="space-y-4">
             <h1 className={smallTitle}>Street Address</h1>
             <input
+              onChange={(e) => setClientCity(e.target.value)}
               className={inputStyle}
-              value={objectData.clientAddress.street}
+              value={clientCity}
               type="text"
             />
           </div>
@@ -188,7 +216,7 @@ export default function EditModal(props: EditModalProps) {
               Cancel
             </button>
             <button
-              onClick={() => handleChangeStreetAddress()}
+             
               className="bg-[#7c5dfa] text-sm font-semibold rounded-full py-4 hover:brightness-150 duration-300  px-6"
             >
               Save Changes

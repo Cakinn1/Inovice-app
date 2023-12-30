@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { InvoiceDataProps } from "../../App";
 import StatusVersion from "../StatusVersion";
 import { stat } from "fs/promises";
 import DeleteModal from "./DeleteModal";
 import Buttons from "./Buttons";
+import EditModal from "./EditModal";
 
 interface EditOrDelete {
   id: string;
@@ -11,6 +12,10 @@ interface EditOrDelete {
   handleDeleteInvoice: () => void;
   setIsDeleteModalOpen: (value: boolean) => void;
   isDeleteModalOpen: boolean;
+  handleMarkAsPaid: () => void;
+  objectData: InvoiceDataProps;
+  setInvoiceData: (value: InvoiceDataProps[]) => void;
+  invoiceData: InvoiceDataProps[];
 }
 
 export default function EditOrDelete(props: EditOrDelete) {
@@ -20,7 +25,13 @@ export default function EditOrDelete(props: EditOrDelete) {
     handleDeleteInvoice,
     setIsDeleteModalOpen,
     isDeleteModalOpen,
+    handleMarkAsPaid,
+    objectData,
+    invoiceData,
+    setInvoiceData,
   } = props;
+
+  const [editModal, setEditModal] = useState<boolean>(true);
 
   const statusBackground =
     status === "paid"
@@ -39,6 +50,44 @@ export default function EditOrDelete(props: EditOrDelete) {
       ? "bg-white"
       : "";
 
+  const [inputStreetAddress, setInputStreetAddress] = useState<string>(objectData.senderAddress.street);
+
+  console.log(id, objectData);
+
+  function updateInvoiceField(id: string, field: string, value: string, inputValue: string) {
+    const updateInvoice = invoiceData.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          [field]: {
+            ...item[field],
+            [value]: inputValue 
+          }
+        };
+      } else {
+        return item;
+      }
+    });
+    setInvoiceData(updateInvoice);
+  }
+
+  function handleChangeStreetAddress() {
+    const updateData = invoiceData.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          senderAddress: {
+            ...item.senderAddress,
+            street: inputStreetAddress,
+          },
+        };
+      } else {
+        return item;
+      }
+    });
+    setInvoiceData(updateData);
+  }
+  console.log(inputStreetAddress);
   return (
     <>
       <div className="bg-[#1e2139] px-8 text-white rounded-lg h-[110px] flex justify-between items-center">
@@ -54,18 +103,37 @@ export default function EditOrDelete(props: EditOrDelete) {
         </div>
         <div className="flex items-center gap-x-4">
           <Buttons
+            setEditModal={setEditModal}
             text="Edit"
             handleDeleteInvoice={handleDeleteInvoice}
             isDeleteModalOpen={isDeleteModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
           />
+          {(status === "pending" || status === "draft") && (
+            <button
+              className="bg-[#7c5dfa] text-sm font-semibold rounded-full py-3 hover:brightness-150 duration-300  px-6"
+              onClick={() => handleMarkAsPaid()}
+            >
+              Mark As Paid
+            </button>
+          )}
         </div>
       </div>
       {isDeleteModalOpen && (
         <DeleteModal
+          setEditModal={setEditModal}
           handleDeleteInvoice={handleDeleteInvoice}
           isDeleteModalOpen={isDeleteModalOpen}
           setIsDeleteModalOpen={setIsDeleteModalOpen}
+        />
+      )}
+      {editModal && (
+        <EditModal
+          inputStreetAddress={inputStreetAddress}
+          setInputStreetAddress={setInputStreetAddress}
+          handleChangeStreetAddress={handleChangeStreetAddress}
+          setEditModal={setEditModal}
+          objectData={objectData}
         />
       )}
     </>

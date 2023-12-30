@@ -5,11 +5,17 @@ interface ButtonProps {
   isDeleteModalOpen: boolean;
   text: string;
   handleDeleteInvoice: () => void;
+  setEditModal: (value: boolean) => void;
 }
 
 export default function Buttons(props: ButtonProps) {
-  const { setIsDeleteModalOpen, isDeleteModalOpen, text, handleDeleteInvoice } =
-    props;
+  const {
+    setIsDeleteModalOpen,
+    isDeleteModalOpen,
+    text,
+    handleDeleteInvoice,
+    setEditModal,
+  } = props;
   return (
     <>
       <div>
@@ -17,6 +23,8 @@ export default function Buttons(props: ButtonProps) {
           onClick={() => {
             if (text === "Cancel") {
               setIsDeleteModalOpen(!isDeleteModalOpen);
+            } else {
+              setEditModal(true);
             }
           }}
           className="bg-[#252945] text-sm font-semibold rounded-full py-3 hover:brightness-150 duration-300  px-6"

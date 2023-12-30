@@ -8,17 +8,18 @@ interface EditHeaderProps {
 }
 
 export default function EditHeader(props: EditHeaderProps) {
+  const { description, id, senderAddress } = props;
   return (
     <div className="flex justify-between">
       <div className="text-[14px]">
-        <p className="font-semibold">#{props.id}</p>
-        <p>{props.description}</p>
+        <p className="font-semibold">#{id}</p>
+        <p>{description}</p>
       </div>
       <div className="text-[14px]">
-        <p>{props.senderAddress.street}</p>
-        <p>{props.senderAddress.city}</p>
-        <p>{props.senderAddress.postCode}</p>
-        <p>{props.senderAddress.country}</p>
+        <p>{senderAddress.street}</p>
+        <p>{senderAddress.city}</p>
+        <p>{senderAddress.postCode}</p>
+        <p>{senderAddress.country}</p>
       </div>
     </div>
   );

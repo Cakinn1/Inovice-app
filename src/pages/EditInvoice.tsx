@@ -26,24 +26,32 @@ export default function EditInvoice(props: EditInvoiceProps) {
     const filterOutData = invoiceData.filter((item) => {
       return item.id !== id;
     });
-
     navigate("/");
     setInvoiceData(filterOutData);
   }
 
+  function handleMarkAsPaid() {
+    const updateObject = invoiceData.map((item) => {
+      return item.id === id ? { ...item, status: "paid" } : item;
+    });
+    setInvoiceData(updateObject);
+  }
 
   return (
     <div className="max-w-[730px]  space-y-4  py-[60px] mx-auto">
       <InvoiceHeader />
-
       <EditOrDelete
+        invoiceData={invoiceData}
+        setInvoiceData={setInvoiceData}
+        objectData={objectData}
+        handleMarkAsPaid={handleMarkAsPaid}
         isDeleteModalOpen={isDeleteModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         handleDeleteInvoice={handleDeleteInvoice}
         id={objectData.id}
         status={objectData.status}
       />
-      <EditMain objectData={objectData}  />
+      <EditMain objectData={objectData} />
     </div>
   );
 }

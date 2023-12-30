@@ -19,6 +19,7 @@ export interface InvoiceDataProps {
   // status: "paid" | "pending" | "draft"
   status: string;
   total: number;
+  [key: string]: any
 }
 
 export interface SenderAddressProps {
@@ -54,7 +55,15 @@ export default function App() {
               <Main invoiceData={invoiceData} setInvoiceData={setInvoiceData} />
             }
           />
-          <Route path="/invoice/:id" element={<EditInvoice setInvoiceData={setInvoiceData} invoiceData={invoiceData} />} />
+          <Route
+            path="/invoice/:id"
+            element={
+              <EditInvoice
+                setInvoiceData={setInvoiceData}
+                invoiceData={invoiceData}
+              />
+            }
+          />
         </Routes>
       </Router>
     </div>

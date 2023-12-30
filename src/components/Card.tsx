@@ -1,6 +1,8 @@
 import React from "react";
 import { InvoiceDataProps } from "../App";
 import { FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import StatusVersion from "./StatusVersion";
 export default function Card(props: InvoiceDataProps) {
   const {
     clientAddress,
@@ -35,7 +37,10 @@ export default function Card(props: InvoiceDataProps) {
       : "";
 
   return (
-    <div className="justify-between text-white h-[90px] w-full rounded-lg flex items-center px-6 bg-[#1e2139]">
+    <Link
+      to={`/invoice/${id}`}
+      className="justify-between text-white h-[90px] w-full rounded-lg flex items-center px-6 bg-[#1e2139]"
+    >
       <div className="text-sm flex items-center gap-x-4">
         <p>#{id}</p>
         <h1>Due {paymentDue}</h1>
@@ -46,16 +51,14 @@ export default function Card(props: InvoiceDataProps) {
 
       <div className="flex items-center gap-x-6">
         <h1 className="text-lg font-bold">${total.toFixed(2)}</h1>
-        <div className="flex gap-x-4 items-center">
-          <h1
-            className={`${statusBackground} text-sm gap-x-2 font-bold w-[100px] flex rounded-lg justify-center items-center py-[10px]`}
-          >
-            <div className={`w-2 h-2 rounded-full ${statusDot}`}></div>
-            {status.slice(0, 1).toLocaleUpperCase() + status.slice(1)}
-          </h1>
-          <FaChevronRight />
-        </div>
+        <StatusVersion
+          key={status}
+          isTrue={true}
+          status={status}
+          statusDot={statusDot}
+          statusBackground={statusBackground}
+        />
       </div>
-    </div>
+    </Link>
   );
 }

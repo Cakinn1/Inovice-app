@@ -18,3 +18,6 @@ export const sortingVariables: SortingProps[] = [
     title: "All",
   },
 ];
+
+
+

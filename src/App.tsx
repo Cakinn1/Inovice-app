@@ -2,6 +2,8 @@ import Main from "./pages/Main";
 import Nav from "./pages/Nav";
 import data from "./constants/data.json";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import EditInvoice from "./pages/EditInvoice";
 
 export interface InvoiceDataProps {
   clientAddress: ClientAddressProps;
@@ -43,8 +45,18 @@ export default function App() {
   const [invoiceData, setInvoiceData] = useState<InvoiceDataProps[]>(data);
   return (
     <div>
-      <Nav />
-      <Main invoiceData={invoiceData} setInvoiceData={setInvoiceData} />
+      <Router>
+        <Nav />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main invoiceData={invoiceData} setInvoiceData={setInvoiceData} />
+            }
+          />
+          <Route path="/invoice/:id" element={<EditInvoice setInvoiceData={setInvoiceData} invoiceData={invoiceData} />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

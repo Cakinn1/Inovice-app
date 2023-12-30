@@ -34,10 +34,8 @@ export default function Main(props: MainProps) {
     }
   }
 
-  console.log(filterItems)
   return (
     <section
-      // style={{ height: "calc(100vh - 72px)" }}
       className=" max-w-[730px] mx-auto min-h-screen pb-[100px]"
     >
       <Header

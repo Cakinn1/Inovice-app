@@ -39,7 +39,7 @@ export default function Card(props: InvoiceDataProps) {
   return (
     <Link
       to={`/invoice/${id}`}
-      className="justify-between text-white h-[90px] w-full rounded-lg flex items-center px-6 bg-[#1e2139]"
+      className="justify-between hover:border-[#7c5dfa] border-[#1e2139] border duration-300 text-white h-[90px] w-full rounded-lg flex items-center px-6 bg-[#1e2139]"
     >
       <div className="text-sm flex items-center gap-x-4">
         <p>#{id}</p>

@@ -21,20 +21,20 @@ export interface InvoiceDataProps {
   total: number;
 }
 
-interface SenderAddressProps {
+export interface SenderAddressProps {
   street: string;
   city: string;
   postCode: string;
   country: string;
 }
 
-interface ClientAddressProps {
+export interface ClientAddressProps {
   street: string;
   city: string;
   postCode: string;
   country: string;
 }
-interface InvoiceItem {
+export interface InvoiceItem {
   name: string;
   quantity: number;
   price: number;

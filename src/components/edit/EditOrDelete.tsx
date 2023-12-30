@@ -31,7 +31,7 @@ export default function EditOrDelete(props: EditOrDelete) {
     setInvoiceData,
   } = props;
 
-  const [editModal, setEditModal] = useState<boolean>(true);
+  const [editModal, setEditModal] = useState<boolean>(false);
 
   const statusBackground =
     status === "paid"

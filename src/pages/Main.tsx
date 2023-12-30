@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { InvoiceDataProps } from "../App";
 import Header from "../components/Header";
 import data from "../constants/data.json";
+import Card from "../components/Card";
 
 interface MainProps {
   invoiceData: InvoiceDataProps[];
@@ -12,33 +13,42 @@ export default function Main(props: MainProps) {
   const { invoiceData, setInvoiceData } = props;
   const [filterItems, setFilterItems] =
     useState<InvoiceDataProps[]>(invoiceData);
-  const numberOfInvoicesLeft = invoiceData.length
+
+  const numberOfInvoicesLeft = filterItems.length;
 
   function handleSortingOptions(value: string) {
     if (value === "Draft") {
-      setInvoiceData(
-        filterItems.slice().filter((item) => item.status === "draft")
+      setFilterItems(
+        invoiceData.slice().filter((item) => item.status === "draft")
       );
     } else if (value === "Paid") {
-      setInvoiceData(
-        filterItems.slice().filter((item) => item.status === "paid")
+      setFilterItems(
+        invoiceData.slice().filter((item) => item.status === "paid")
       );
     } else if (value === "Pending") {
-      setInvoiceData(
-        filterItems.slice().filter((item) => item.status === "pending")
+      setFilterItems(
+        invoiceData.slice().filter((item) => item.status === "pending")
       );
-    } else if (value === "") {
-      setInvoiceData(invoiceData);
+    } else if (value === "All") {
+      setFilterItems(invoiceData);
     }
   }
-  console.log(invoiceData);
 
+  console.log(filterItems)
   return (
-    <section style={{ height: "calc(100vh - 72px)" }} className="bg-[#141625]">
+    <section
+      // style={{ height: "calc(100vh - 72px)" }}
+      className=" max-w-[730px] mx-auto min-h-screen pb-[100px]"
+    >
       <Header
         handleSortingOptions={handleSortingOptions}
         numberOfInvoicesLeft={numberOfInvoicesLeft}
       />
+      <div className="space-y-4">
+        {filterItems.map((item) => {
+          return <Card {...item} />;
+        })}
+      </div>
     </section>
   );
 }

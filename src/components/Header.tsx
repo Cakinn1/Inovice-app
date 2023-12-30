@@ -16,7 +16,7 @@ export default function Header(props: HeaderProps) {
 
   // after fix making it checked or not check with background color aswell
   return (
-    <div className="max-w-[730px] flex justify-between items-center text-white mx-auto py-[60px]">
+    <div className=" flex justify-between items-center text-white  py-[60px]">
       <div className="space-y-2">
         <h1 className="text-3xl font-semibold">Invoices</h1>
         <p className="text-sm">
@@ -28,8 +28,8 @@ export default function Header(props: HeaderProps) {
           className="flex gap-x-3 items-center"
           onClick={() => setIsSortingOpen(!isSortingOpen)}
         >
-          <h1 className="font-semibold">Filter by status</h1>
-          <IoChevronDownOutline className="text-[#7c5dfa]" />
+          <h1 className="font-semibold  cursor-pointer">Filter by status</h1>
+          <IoChevronDownOutline className="text-[#7c5dfa]  cursor-pointer" />
           {isSortingOpen && <Sorting  handleSortingOptions={handleSortingOptions} />}
         </div>
         <button className="bg-[#7c5dfa]  group hover:opacity-65 duration-300 text-sm font-semibold flex items-center gap-x-4 p-2  px-3 rounded-full">

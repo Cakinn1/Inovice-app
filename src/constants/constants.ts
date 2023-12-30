@@ -14,4 +14,7 @@ export const sortingVariables: SortingProps[] = [
   {
     title: "Paid",
   },
+  {
+    title: "All",
+  },
 ];

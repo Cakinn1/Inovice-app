@@ -10,7 +10,7 @@ export default function Sorting(props: SortingProps) {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="absolute p-6 shadow-2xl space-y-1 -bottom-[130px] -left-[70px] rounded-md bg-[#252945] min-h-[120px] w-[210px]"
+      className="absolute p-6 shadow-2xl space-y-1 -bottom-[160px] -left-[70px] rounded-md bg-[#252945] min-h-[120px] w-[210px]"
     >
       {sortingVariables.map((variables) => {
         return (
